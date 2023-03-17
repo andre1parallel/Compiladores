@@ -1,0 +1,280 @@
+grammar AGLang;
+
+@header{
+	import br.com.andreglaucio.aglang.datastructure.*;
+	import br.com.andreglaucio.aglang.exceptions.AGLSemanticException;
+	import br.com.andreglaucio.aglang.ast.*;
+	import java.util.ArrayList;
+	import java.util.Stack;
+}
+
+@members{
+	private int _tipo;
+	private String _varName;
+	private String _varValue;
+	private AGLSymbolTable symbolTable = new AGLSymbolTable();
+	private AGLSymbol symbol;
+	private AGLProgram program = new AGLProgram();
+	private ArrayList<AbstractCommand> curThread;
+	private Stack<ArrayList<AbstractCommand>> stack = new Stack<ArrayList<AbstractCommand>>();
+	private String _readID;
+	private String _writeID;
+	private String _exprID;
+	private String _exprContent;
+	private String _exprDecision;
+	private ArrayList<AbstractCommand> listaTrue;
+	private ArrayList<AbstractCommand> listaFalse;
+	
+	// Método para verificar se um ID existe na tabela de símbolos
+	public void verificaID(String id){
+		if (!symbolTable.exists(id)){
+			throw new AGLSemanticException("Símbolo '"+id+"' não declarado");
+		}
+	}
+	
+	// Método para exibir os comandos do programa
+	public void exibeComandos(){
+		for (AbstractCommand c: program.getComandos()){
+			System.out.println(c);
+		}
+	}
+	
+	// Método para gerar o código alvo do programa
+	public void generateCode(){
+		program.generateTarget();
+	}	
+}
+
+// Regra para o programa principal
+prog	: 'programa' decl bloco 'fimprog;'
+		  { 
+		  	// Define a tabela de símbolos e os comandos do programa principal
+		  	program.setVarTable(symbolTable);
+           	program.setComandos(stack.pop());
+          }
+		;
+
+/// Regra para a declaração de variáveis
+decl	: (declaravar)+
+		;
+		
+// Regra para declarar uma variável
+declaravar	: tipo ID {
+					 // Obter o nome e tipo da variável a ser declarada
+					 _varName = _input.LT(-1).getText();
+					 _varValue = null;
+					 
+					 // Cria um objeto da variável
+					 symbol = new AGLVariable(_varName, _tipo, _varValue);
+					 
+					 // Verifica se o símbolo já existe na tabela de símbolos
+		 			 if (!symbolTable.exists(_varName)){
+		 			 		// Adiciona o símbolo na tabela de símbolos
+			 				symbolTable.add(symbol);
+		 			 }
+		 			 else {
+		 			 	// Lança uma exceção se o símbolo já foi declarado
+		 				throw new AGLSemanticException("Simbolo '"+_varName+"' ja foi declarado");
+		 			 }
+				}
+					  (  VIR 
+					  	 ID {
+					  	 		// Obter o nome e tipo da variável a ser declarada
+						  	 	_varName = _input.LT(-1).getText();
+						 		_varValue = null;
+						 		
+						 		// Cria um objeto da variável
+						 		symbol = new AGLVariable(_varName, _tipo, _varValue);
+						 		
+						 		// Verifica se o símbolo já existe na tabela de símbolos
+						 		if (!symbolTable.exists(_varName)){
+						 			// Adiciona o símbolo na tabela de símbolos
+		                   			symbolTable.add(symbol);
+		                  		}
+		                  		else{
+		                  			// Lança uma exceção se o símbolo já foi declarado
+		                  			throw new AGLSemanticException("Simbolo '"+_varName+"' ja foi declarado");
+		                  		}
+					  	 	}
+					  	 )* 
+					  	 SC
+			;
+
+// Regra para definir o tipo da variável		
+tipo	: 'numero' { _tipo = AGLVariable.NUMBER; }
+		| 'texto'  { _tipo = AGLVariable.TEXT; }
+		;
+
+// Regra para definir um bloco de comandos
+bloco	:	{ 
+			  curThread = new ArrayList<AbstractCommand>(); // Cria uma nova thread de comandos
+			  stack.push(curThread);						// Adiciona a thread à pilha de threads
+			}
+			(cmd)+
+		;
+
+// Regra para definir um comando
+cmd		: cmdleitura // { System.out.println("RECONHECIDO UM COMANDO DE LEITURA!"); }	// Comando de leitura de entrada de dados
+		| cmdescrita // { System.out.println("RECONHECIDO UM COMANDO DE ESCRITA!"); }	// Comando de escrita de dados na saída
+		| cmdattrib  // { System.out.println("RECONHECIDO UM COMANDO DE ATRIBUIÇÃO"); } // Comando de atribuição de valores a variáveis
+		| cmddecisao // { System.out.println("RECONHECIDO UM COMANDO DE DECISÃO"); }	// Comando de decisão para controle de fluxo
+		;
+
+// Regra para o comando de leitura
+cmdleitura	: 'leia' AP
+					 // Verifica se o ID existe na tabela de símbolos
+					 ID { verificaID(_input.LT(-1).getText()); 
+					 	  _readID = _input.LT(-1).getText();
+					 	}
+					 FP
+					 SC
+					 
+					 {
+					 	// Obtém a variável correspondente ao ID
+					 	AGLVariable var = (AGLVariable)symbolTable.get(_readID);
+					 	
+					 	// Cria um comando de leitura e adiciona à thread atual
+					 	CommandLeitura cmd = new CommandLeitura(_readID, var);
+					 	stack.peek().add(cmd);
+					 }
+					 
+			;
+
+// Regra para o comando de escrita
+cmdescrita	: 'escreva' AP 
+						ID {
+							// Verifica se o ID foi declarado 
+							verificaID(_input.LT(-1).getText()); 
+							_writeID = _input.LT(-1).getText();
+							}
+						FP 
+						SC
+						
+						{
+							// Cria um comando de escrita e adiciona à thread atual
+							CommandEscrita cmd = new CommandEscrita(_writeID);
+               	  			stack.peek().add(cmd);
+						}
+			;
+
+// Regra para o comando de atribuição
+cmdattrib	: ID {
+					// Verifica se o ID foi declarado
+					verificaID(_input.LT(-1).getText()); 
+				   	_exprID = _input.LT(-1).getText();
+				 } 
+			  ATTR { _exprContent = ""; }
+			  expr 
+			  SC {
+			  		// Cria um comando de atribuição e adiciona à thread atual
+			  		CommandAtribuicao cmd = new CommandAtribuicao(_exprID, _exprContent);
+			  		stack.peek().add(cmd);
+			  	 }
+			  
+			;
+
+// Regra para o comando de decisão
+cmddecisao	: 'se' AP 
+				   ID { _exprDecision = _input.LT(-1).getText(); }
+				   OPREL { _exprDecision += _input.LT(-1).getText(); } 
+				   (ID | NUMBER) { _exprDecision += _input.LT(-1).getText(); }
+				   FP 
+				   ACH
+				   {
+				     // Cria uma nova thread para o bloco de comandos do 'se' e a adiciona à pilha
+				   	 curThread = new ArrayList<AbstractCommand>();
+				   	 stack.push(curThread);
+				   }
+				   (cmd)+ 
+				   FCH 
+				   {
+				   		// Obtém a thread do bloco de comandos do 'se'
+				   		listaTrue = stack.pop();			
+				   }
+				  ('senao'
+			 			ACH 
+			 			{
+			 				// Cria uma nova thread para o bloco de comandos do 'senao' e a adiciona à pilha
+			 				curThread = new ArrayList<AbstractCommand>();
+			 				stack.push(curThread);
+			 			}
+			 	
+					 	(cmd+) 
+			 			FCH 
+			 			{
+			 				// Obtém a thread do bloco de comandos do 'senao'
+			 				listaFalse = stack.pop();
+			 				
+			 				// Cria um comando de decisão e adiciona à thread atual
+					 		CommandDecisao cmd = new CommandDecisao(_exprDecision, listaTrue, listaFalse);
+		                   	stack.peek().add(cmd);
+					 	}
+					 	
+					 	)?
+			;
+
+// Regra para expressão (operações aritméticas e lógicas)
+expr		: termo ( 
+			  OP 	{ _exprContent += _input.LT(-1).getText(); }
+			  termo
+			  		)*
+			;
+
+// Regra para termo (identificador ou número)
+termo		: ID { verificaID(_input.LT(-1).getText()); 
+				   _exprContent += _input.LT(-1).getText();
+				 } 
+			| NUMBER {
+					   _exprContent += _input.LT(-1).getText();
+					 }
+			;
+
+// Abre parênteses
+AP	: '('
+	;
+
+// Fecha parênteses
+FP	: ')'
+	;
+
+// Ponto e vírgula, encerramento de bloco
+SC	: ';'
+	;
+
+// Operadores aritméticos (adição, subtração, multiplicação, divisão)
+OP	: '+' | '-' | '*' | '/'
+	;
+
+// Operador de atribuição
+ATTR : '='
+	 ;
+
+// Vírgula 
+VIR	 : ','
+	 ;
+
+// Abre chaves
+ACH	 : '{'
+	 ;
+
+// Fecha chaves
+FCH	 : '}'
+	 ;
+
+// Operadores relacionais
+OPREL	: '>' | '<' | '>=' | '<=' | '==' | '!='
+		;
+
+// Identificador
+// Letra minúscula seguida de outras letras minúsculas, maiúsculas ou números
+ID	: [a-z] ([a-z] | [A-Z] | [0-9])*
+	;
+
+// Números
+// Um ou mais dígitos com opcional de casa decimal seguida de dígitos
+NUMBER	: [0-9]+ ('.' [0-9]+)?
+		;
+
+// Espaços em branco
+// Ignora espaços em branco, tabulações e quebras de linha
+WS	: (' ' | '\t' | '\n' | '\r') -> skip;

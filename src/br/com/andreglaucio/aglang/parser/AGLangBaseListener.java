@@ -23,37 +23,37 @@ public class AGLangBaseListener implements AGLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProg(AGLangParser.ProgContext ctx) { }
+	@Override public void enterProgram(AGLangParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProg(AGLangParser.ProgContext ctx) { }
+	@Override public void exitProgram(AGLangParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDecl(AGLangParser.DeclContext ctx) { }
+	@Override public void enterDeclaracao(AGLangParser.DeclaracaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDecl(AGLangParser.DeclContext ctx) { }
+	@Override public void exitDeclaracao(AGLangParser.DeclaracaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaravar(AGLangParser.DeclaravarContext ctx) { }
+	@Override public void enterDeclaracao_var(AGLangParser.Declaracao_varContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclaravar(AGLangParser.DeclaravarContext ctx) { }
+	@Override public void exitDeclaracao_var(AGLangParser.Declaracao_varContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -95,49 +95,49 @@ public class AGLangBaseListener implements AGLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCmdleitura(AGLangParser.CmdleituraContext ctx) { }
+	@Override public void enterCmdEntrada(AGLangParser.CmdEntradaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCmdleitura(AGLangParser.CmdleituraContext ctx) { }
+	@Override public void exitCmdEntrada(AGLangParser.CmdEntradaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCmdescrita(AGLangParser.CmdescritaContext ctx) { }
+	@Override public void enterCmdSaida(AGLangParser.CmdSaidaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCmdescrita(AGLangParser.CmdescritaContext ctx) { }
+	@Override public void exitCmdSaida(AGLangParser.CmdSaidaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCmdattrib(AGLangParser.CmdattribContext ctx) { }
+	@Override public void enterCmdAtribui(AGLangParser.CmdAtribuiContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCmdattrib(AGLangParser.CmdattribContext ctx) { }
+	@Override public void exitCmdAtribui(AGLangParser.CmdAtribuiContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCmddecisao(AGLangParser.CmddecisaoContext ctx) { }
+	@Override public void enterCmdDecisao(AGLangParser.CmdDecisaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCmddecisao(AGLangParser.CmddecisaoContext ctx) { }
+	@Override public void exitCmdDecisao(AGLangParser.CmdDecisaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

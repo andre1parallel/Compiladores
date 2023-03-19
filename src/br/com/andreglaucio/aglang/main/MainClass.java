@@ -19,7 +19,9 @@ public class MainClass {
 			AGLangParser parser;
 			
 			// O arquivo "input.agl" é lido como entrada para o Analisador léxico
-			lexer = new AGLangLexer(CharStreams.fromFileName("input.agl"));
+			 lexer = new AGLangLexer(CharStreams.fromFileName("input.agl"));
+//			lexer = new AGLangLexer(CharStreams.fromFileName("inputSintax.agl"));
+//			lexer = new AGLangLexer(CharStreams.fromFileName("inputSeman.agl"));
 			
 			// É criado um "Fluxo de tokens" para passar para o Analisador Sintático
 			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
@@ -28,7 +30,7 @@ public class MainClass {
 			parser = new AGLangParser(tokenStream);
 			
 			// Chama o método "prog" do parser para iniciar a Análise Sintática
-			parser.prog();
+			parser.program();
 			
 			System.out.println("O programa foi compilado com sucesso!");
 			

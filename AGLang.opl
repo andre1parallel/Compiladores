@@ -46,7 +46,7 @@ grammar AGLang;
 }
 
 // Regra para o programa principal
-prog	: 'programa' decl bloco 'fimprog;'
+program	: 'INICIO' declaracao bloco 'FIM;'
 		  { 
 		  	// Define a tabela de símbolos e os comandos do programa principal
 		  	program.setVarTable(symbolTable);
@@ -55,11 +55,11 @@ prog	: 'programa' decl bloco 'fimprog;'
 		;
 
 /// Regra para a declaração de variáveis
-decl	: (declaravar)+
+declaracao	: (declaracao_var)+
 		;
 		
 // Regra para declarar uma variável
-declaravar	: tipo ID {
+declaracao_var	: tipo ID { 
 					 // Obter o nome e tipo da variável a ser declarada
 					 _varName = _input.LT(-1).getText();
 					 _varValue = null;
@@ -106,7 +106,7 @@ tipo	: 'numero' { _tipo = AGLVariable.NUMBER; }
 		;
 
 // Regra para definir um bloco de comandos
-bloco	:	{ 
+bloco	:	{
 			  curThread = new ArrayList<AbstractCommand>(); // Cria uma nova thread de comandos
 			  stack.push(curThread);						// Adiciona a thread à pilha de threads
 			}
@@ -114,14 +114,14 @@ bloco	:	{
 		;
 
 // Regra para definir um comando
-cmd		: cmdleitura // { System.out.println("RECONHECIDO UM COMANDO DE LEITURA!"); }	// Comando de leitura de entrada de dados
-		| cmdescrita // { System.out.println("RECONHECIDO UM COMANDO DE ESCRITA!"); }	// Comando de escrita de dados na saída
-		| cmdattrib  // { System.out.println("RECONHECIDO UM COMANDO DE ATRIBUIÇÃO"); } // Comando de atribuição de valores a variáveis
-		| cmddecisao // { System.out.println("RECONHECIDO UM COMANDO DE DECISÃO"); }	// Comando de decisão para controle de fluxo
+cmd		: cmdEntrada 	// Comando de leitura de entrada de dados
+		| cmdSaida 	// Comando de escrita de dados na saída
+		| cmdAtribui   	// Comando de atribuição de valores a variáveis
+		| cmdDecisao 	// Comando de decisão para controle de fluxo
 		;
 
 // Regra para o comando de leitura
-cmdleitura	: 'leia' AP
+cmdEntrada 	: 'leia' AP
 					 // Verifica se o ID existe na tabela de símbolos
 					 ID { verificaID(_input.LT(-1).getText()); 
 					 	  _readID = _input.LT(-1).getText();
@@ -141,7 +141,7 @@ cmdleitura	: 'leia' AP
 			;
 
 // Regra para o comando de escrita
-cmdescrita	: 'escreva' AP 
+cmdSaida	: 'escreva' AP 
 						ID {
 							// Verifica se o ID foi declarado 
 							verificaID(_input.LT(-1).getText()); 
@@ -158,7 +158,7 @@ cmdescrita	: 'escreva' AP
 			;
 
 // Regra para o comando de atribuição
-cmdattrib	: ID {
+cmdAtribui	: ID {
 					// Verifica se o ID foi declarado
 					verificaID(_input.LT(-1).getText()); 
 				   	_exprID = _input.LT(-1).getText();
@@ -174,7 +174,7 @@ cmdattrib	: ID {
 			;
 
 // Regra para o comando de decisão
-cmddecisao	: 'se' AP 
+cmdDecisao	: 'se' AP 
 				   ID { _exprDecision = _input.LT(-1).getText(); }
 				   OPREL { _exprDecision += _input.LT(-1).getText(); } 
 				   (ID | NUMBER) { _exprDecision += _input.LT(-1).getText(); }

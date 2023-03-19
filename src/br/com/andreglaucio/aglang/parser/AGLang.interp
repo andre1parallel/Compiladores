@@ -1,7 +1,7 @@
 token literal names:
 null
-'programa'
-'fimprog;'
+'INICIO'
+'FIM;'
 'numero'
 'texto'
 'leia'
@@ -45,16 +45,16 @@ NUMBER
 WS
 
 rule names:
-prog
-decl
-declaravar
+program
+declaracao
+declaracao_var
 tipo
 bloco
 cmd
-cmdleitura
-cmdescrita
-cmdattrib
-cmddecisao
+cmdEntrada
+cmdSaida
+cmdAtribui
+cmdDecisao
 expr
 termo
 

@@ -28,16 +28,16 @@ public class AGLangParser extends Parser {
 		FP=10, SC=11, OP=12, ATTR=13, VIR=14, ACH=15, FCH=16, OPREL=17, ID=18, 
 		NUMBER=19, WS=20;
 	public static final int
-		RULE_prog = 0, RULE_decl = 1, RULE_declaravar = 2, RULE_tipo = 3, RULE_bloco = 4, 
-		RULE_cmd = 5, RULE_cmdleitura = 6, RULE_cmdescrita = 7, RULE_cmdattrib = 8, 
-		RULE_cmddecisao = 9, RULE_expr = 10, RULE_termo = 11;
+		RULE_program = 0, RULE_declaracao = 1, RULE_declaracao_var = 2, RULE_tipo = 3, 
+		RULE_bloco = 4, RULE_cmd = 5, RULE_cmdEntrada = 6, RULE_cmdSaida = 7, 
+		RULE_cmdAtribui = 8, RULE_cmdDecisao = 9, RULE_expr = 10, RULE_termo = 11;
 	public static final String[] ruleNames = {
-		"prog", "decl", "declaravar", "tipo", "bloco", "cmd", "cmdleitura", "cmdescrita", 
-		"cmdattrib", "cmddecisao", "expr", "termo"
+		"program", "declaracao", "declaracao_var", "tipo", "bloco", "cmd", "cmdEntrada", 
+		"cmdSaida", "cmdAtribui", "cmdDecisao", "expr", "termo"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'programa'", "'fimprog;'", "'numero'", "'texto'", "'leia'", "'escreva'", 
+		null, "'INICIO'", "'FIM;'", "'numero'", "'texto'", "'leia'", "'escreva'", 
 		"'se'", "'senao'", "'('", "')'", "';'", null, "'='", "','", "'{'", "'}'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
@@ -129,37 +129,37 @@ public class AGLangParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
-	public static class ProgContext extends ParserRuleContext {
-		public DeclContext decl() {
-			return getRuleContext(DeclContext.class,0);
+	public static class ProgramContext extends ParserRuleContext {
+		public DeclaracaoContext declaracao() {
+			return getRuleContext(DeclaracaoContext.class,0);
 		}
 		public BlocoContext bloco() {
 			return getRuleContext(BlocoContext.class,0);
 		}
-		public ProgContext(ParserRuleContext parent, int invokingState) {
+		public ProgramContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_prog; }
+		@Override public int getRuleIndex() { return RULE_program; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterProg(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterProgram(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitProg(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitProgram(this);
 		}
 	}
 
-	public final ProgContext prog() throws RecognitionException {
-		ProgContext _localctx = new ProgContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_prog);
+	public final ProgramContext program() throws RecognitionException {
+		ProgramContext _localctx = new ProgramContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_program);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(24);
 			match(T__0);
 			setState(25);
-			decl();
+			declaracao();
 			setState(26);
 			bloco();
 			setState(27);
@@ -182,30 +182,30 @@ public class AGLangParser extends Parser {
 		return _localctx;
 	}
 
-	public static class DeclContext extends ParserRuleContext {
-		public List<DeclaravarContext> declaravar() {
-			return getRuleContexts(DeclaravarContext.class);
+	public static class DeclaracaoContext extends ParserRuleContext {
+		public List<Declaracao_varContext> declaracao_var() {
+			return getRuleContexts(Declaracao_varContext.class);
 		}
-		public DeclaravarContext declaravar(int i) {
-			return getRuleContext(DeclaravarContext.class,i);
+		public Declaracao_varContext declaracao_var(int i) {
+			return getRuleContext(Declaracao_varContext.class,i);
 		}
-		public DeclContext(ParserRuleContext parent, int invokingState) {
+		public DeclaracaoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_decl; }
+		@Override public int getRuleIndex() { return RULE_declaracao; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterDecl(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterDeclaracao(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitDecl(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitDeclaracao(this);
 		}
 	}
 
-	public final DeclContext decl() throws RecognitionException {
-		DeclContext _localctx = new DeclContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_decl);
+	public final DeclaracaoContext declaracao() throws RecognitionException {
+		DeclaracaoContext _localctx = new DeclaracaoContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_declaracao);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -217,7 +217,7 @@ public class AGLangParser extends Parser {
 				{
 				{
 				setState(30);
-				declaravar();
+				declaracao_var();
 				}
 				}
 				setState(33); 
@@ -237,7 +237,7 @@ public class AGLangParser extends Parser {
 		return _localctx;
 	}
 
-	public static class DeclaravarContext extends ParserRuleContext {
+	public static class Declaracao_varContext extends ParserRuleContext {
 		public TipoContext tipo() {
 			return getRuleContext(TipoContext.class,0);
 		}
@@ -250,23 +250,23 @@ public class AGLangParser extends Parser {
 		public TerminalNode VIR(int i) {
 			return getToken(AGLangParser.VIR, i);
 		}
-		public DeclaravarContext(ParserRuleContext parent, int invokingState) {
+		public Declaracao_varContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_declaravar; }
+		@Override public int getRuleIndex() { return RULE_declaracao_var; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterDeclaravar(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterDeclaracao_var(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitDeclaravar(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitDeclaracao_var(this);
 		}
 	}
 
-	public final DeclaravarContext declaravar() throws RecognitionException {
-		DeclaravarContext _localctx = new DeclaravarContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_declaravar);
+	public final Declaracao_varContext declaracao_var() throws RecognitionException {
+		Declaracao_varContext _localctx = new Declaracao_varContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_declaracao_var);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -455,17 +455,17 @@ public class AGLangParser extends Parser {
 	}
 
 	public static class CmdContext extends ParserRuleContext {
-		public CmdleituraContext cmdleitura() {
-			return getRuleContext(CmdleituraContext.class,0);
+		public CmdEntradaContext cmdEntrada() {
+			return getRuleContext(CmdEntradaContext.class,0);
 		}
-		public CmdescritaContext cmdescrita() {
-			return getRuleContext(CmdescritaContext.class,0);
+		public CmdSaidaContext cmdSaida() {
+			return getRuleContext(CmdSaidaContext.class,0);
 		}
-		public CmdattribContext cmdattrib() {
-			return getRuleContext(CmdattribContext.class,0);
+		public CmdAtribuiContext cmdAtribui() {
+			return getRuleContext(CmdAtribuiContext.class,0);
 		}
-		public CmddecisaoContext cmddecisao() {
-			return getRuleContext(CmddecisaoContext.class,0);
+		public CmdDecisaoContext cmdDecisao() {
+			return getRuleContext(CmdDecisaoContext.class,0);
 		}
 		public CmdContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -492,28 +492,28 @@ public class AGLangParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(60);
-				cmdleitura();
+				cmdEntrada();
 				}
 				break;
 			case T__5:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(61);
-				cmdescrita();
+				cmdSaida();
 				}
 				break;
 			case ID:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(62);
-				cmdattrib();
+				cmdAtribui();
 				}
 				break;
 			case T__6:
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(63);
-				cmddecisao();
+				cmdDecisao();
 				}
 				break;
 			default:
@@ -531,28 +531,28 @@ public class AGLangParser extends Parser {
 		return _localctx;
 	}
 
-	public static class CmdleituraContext extends ParserRuleContext {
+	public static class CmdEntradaContext extends ParserRuleContext {
 		public TerminalNode AP() { return getToken(AGLangParser.AP, 0); }
 		public TerminalNode ID() { return getToken(AGLangParser.ID, 0); }
 		public TerminalNode FP() { return getToken(AGLangParser.FP, 0); }
 		public TerminalNode SC() { return getToken(AGLangParser.SC, 0); }
-		public CmdleituraContext(ParserRuleContext parent, int invokingState) {
+		public CmdEntradaContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_cmdleitura; }
+		@Override public int getRuleIndex() { return RULE_cmdEntrada; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterCmdleitura(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterCmdEntrada(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitCmdleitura(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitCmdEntrada(this);
 		}
 	}
 
-	public final CmdleituraContext cmdleitura() throws RecognitionException {
-		CmdleituraContext _localctx = new CmdleituraContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_cmdleitura);
+	public final CmdEntradaContext cmdEntrada() throws RecognitionException {
+		CmdEntradaContext _localctx = new CmdEntradaContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_cmdEntrada);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -590,28 +590,28 @@ public class AGLangParser extends Parser {
 		return _localctx;
 	}
 
-	public static class CmdescritaContext extends ParserRuleContext {
+	public static class CmdSaidaContext extends ParserRuleContext {
 		public TerminalNode AP() { return getToken(AGLangParser.AP, 0); }
 		public TerminalNode ID() { return getToken(AGLangParser.ID, 0); }
 		public TerminalNode FP() { return getToken(AGLangParser.FP, 0); }
 		public TerminalNode SC() { return getToken(AGLangParser.SC, 0); }
-		public CmdescritaContext(ParserRuleContext parent, int invokingState) {
+		public CmdSaidaContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_cmdescrita; }
+		@Override public int getRuleIndex() { return RULE_cmdSaida; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterCmdescrita(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterCmdSaida(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitCmdescrita(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitCmdSaida(this);
 		}
 	}
 
-	public final CmdescritaContext cmdescrita() throws RecognitionException {
-		CmdescritaContext _localctx = new CmdescritaContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_cmdescrita);
+	public final CmdSaidaContext cmdSaida() throws RecognitionException {
+		CmdSaidaContext _localctx = new CmdSaidaContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_cmdSaida);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -648,30 +648,30 @@ public class AGLangParser extends Parser {
 		return _localctx;
 	}
 
-	public static class CmdattribContext extends ParserRuleContext {
+	public static class CmdAtribuiContext extends ParserRuleContext {
 		public TerminalNode ID() { return getToken(AGLangParser.ID, 0); }
 		public TerminalNode ATTR() { return getToken(AGLangParser.ATTR, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
 		public TerminalNode SC() { return getToken(AGLangParser.SC, 0); }
-		public CmdattribContext(ParserRuleContext parent, int invokingState) {
+		public CmdAtribuiContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_cmdattrib; }
+		@Override public int getRuleIndex() { return RULE_cmdAtribui; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterCmdattrib(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterCmdAtribui(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitCmdattrib(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitCmdAtribui(this);
 		}
 	}
 
-	public final CmdattribContext cmdattrib() throws RecognitionException {
-		CmdattribContext _localctx = new CmdattribContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_cmdattrib);
+	public final CmdAtribuiContext cmdAtribui() throws RecognitionException {
+		CmdAtribuiContext _localctx = new CmdAtribuiContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_cmdAtribui);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -707,7 +707,7 @@ public class AGLangParser extends Parser {
 		return _localctx;
 	}
 
-	public static class CmddecisaoContext extends ParserRuleContext {
+	public static class CmdDecisaoContext extends ParserRuleContext {
 		public TerminalNode AP() { return getToken(AGLangParser.AP, 0); }
 		public List<TerminalNode> ID() { return getTokens(AGLangParser.ID); }
 		public TerminalNode ID(int i) {
@@ -730,23 +730,23 @@ public class AGLangParser extends Parser {
 		public CmdContext cmd(int i) {
 			return getRuleContext(CmdContext.class,i);
 		}
-		public CmddecisaoContext(ParserRuleContext parent, int invokingState) {
+		public CmdDecisaoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_cmddecisao; }
+		@Override public int getRuleIndex() { return RULE_cmdDecisao; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterCmddecisao(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).enterCmdDecisao(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitCmddecisao(this);
+			if ( listener instanceof AGLangListener ) ((AGLangListener)listener).exitCmdDecisao(this);
 		}
 	}
 
-	public final CmddecisaoContext cmddecisao() throws RecognitionException {
-		CmddecisaoContext _localctx = new CmddecisaoContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_cmddecisao);
+	public final CmdDecisaoContext cmdDecisao() throws RecognitionException {
+		CmdDecisaoContext _localctx = new CmdDecisaoContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_cmdDecisao);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);

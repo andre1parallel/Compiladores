@@ -15,35 +15,35 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface AGLangListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link AGLangParser#prog}.
+	 * Enter a parse tree produced by {@link AGLangParser#program}.
 	 * @param ctx the parse tree
 	 */
-	void enterProg(AGLangParser.ProgContext ctx);
+	void enterProgram(AGLangParser.ProgramContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AGLangParser#prog}.
+	 * Exit a parse tree produced by {@link AGLangParser#program}.
 	 * @param ctx the parse tree
 	 */
-	void exitProg(AGLangParser.ProgContext ctx);
+	void exitProgram(AGLangParser.ProgramContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AGLangParser#decl}.
+	 * Enter a parse tree produced by {@link AGLangParser#declaracao}.
 	 * @param ctx the parse tree
 	 */
-	void enterDecl(AGLangParser.DeclContext ctx);
+	void enterDeclaracao(AGLangParser.DeclaracaoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AGLangParser#decl}.
+	 * Exit a parse tree produced by {@link AGLangParser#declaracao}.
 	 * @param ctx the parse tree
 	 */
-	void exitDecl(AGLangParser.DeclContext ctx);
+	void exitDeclaracao(AGLangParser.DeclaracaoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AGLangParser#declaravar}.
+	 * Enter a parse tree produced by {@link AGLangParser#declaracao_var}.
 	 * @param ctx the parse tree
 	 */
-	void enterDeclaravar(AGLangParser.DeclaravarContext ctx);
+	void enterDeclaracao_var(AGLangParser.Declaracao_varContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AGLangParser#declaravar}.
+	 * Exit a parse tree produced by {@link AGLangParser#declaracao_var}.
 	 * @param ctx the parse tree
 	 */
-	void exitDeclaravar(AGLangParser.DeclaravarContext ctx);
+	void exitDeclaracao_var(AGLangParser.Declaracao_varContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AGLangParser#tipo}.
 	 * @param ctx the parse tree
@@ -75,45 +75,45 @@ public interface AGLangListener extends ParseTreeListener {
 	 */
 	void exitCmd(AGLangParser.CmdContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AGLangParser#cmdleitura}.
+	 * Enter a parse tree produced by {@link AGLangParser#cmdEntrada}.
 	 * @param ctx the parse tree
 	 */
-	void enterCmdleitura(AGLangParser.CmdleituraContext ctx);
+	void enterCmdEntrada(AGLangParser.CmdEntradaContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AGLangParser#cmdleitura}.
+	 * Exit a parse tree produced by {@link AGLangParser#cmdEntrada}.
 	 * @param ctx the parse tree
 	 */
-	void exitCmdleitura(AGLangParser.CmdleituraContext ctx);
+	void exitCmdEntrada(AGLangParser.CmdEntradaContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AGLangParser#cmdescrita}.
+	 * Enter a parse tree produced by {@link AGLangParser#cmdSaida}.
 	 * @param ctx the parse tree
 	 */
-	void enterCmdescrita(AGLangParser.CmdescritaContext ctx);
+	void enterCmdSaida(AGLangParser.CmdSaidaContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AGLangParser#cmdescrita}.
+	 * Exit a parse tree produced by {@link AGLangParser#cmdSaida}.
 	 * @param ctx the parse tree
 	 */
-	void exitCmdescrita(AGLangParser.CmdescritaContext ctx);
+	void exitCmdSaida(AGLangParser.CmdSaidaContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AGLangParser#cmdattrib}.
+	 * Enter a parse tree produced by {@link AGLangParser#cmdAtribui}.
 	 * @param ctx the parse tree
 	 */
-	void enterCmdattrib(AGLangParser.CmdattribContext ctx);
+	void enterCmdAtribui(AGLangParser.CmdAtribuiContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AGLangParser#cmdattrib}.
+	 * Exit a parse tree produced by {@link AGLangParser#cmdAtribui}.
 	 * @param ctx the parse tree
 	 */
-	void exitCmdattrib(AGLangParser.CmdattribContext ctx);
+	void exitCmdAtribui(AGLangParser.CmdAtribuiContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AGLangParser#cmddecisao}.
+	 * Enter a parse tree produced by {@link AGLangParser#cmdDecisao}.
 	 * @param ctx the parse tree
 	 */
-	void enterCmddecisao(AGLangParser.CmddecisaoContext ctx);
+	void enterCmdDecisao(AGLangParser.CmdDecisaoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AGLangParser#cmddecisao}.
+	 * Exit a parse tree produced by {@link AGLangParser#cmdDecisao}.
 	 * @param ctx the parse tree
 	 */
-	void exitCmddecisao(AGLangParser.CmddecisaoContext ctx);
+	void exitCmdDecisao(AGLangParser.CmdDecisaoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AGLangParser#expr}.
 	 * @param ctx the parse tree
